@@ -11,7 +11,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 - [x] Chapter 3: Optimizing Fonts and Images
 - [x] Chapter 4: Creating Layouts and Pages
 - [x] Chapter 5: Navigating Between Pages
-- [ ] Chapter 6: Setting Up Your Database
+- [x] Chapter 6: Setting Up Your Database
 - [ ] Chapter 7: Fetching Data
 - [ ] Chapter 8: Static and Dynamic Rendering
 - [ ] Chapter 9: Streaming
