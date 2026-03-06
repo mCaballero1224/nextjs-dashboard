@@ -1,0 +1,58 @@
+'use client'; /* Identify the component as a client component */
+
+import {
+  UserGroupIcon,
+  HomeIcon,
+  DocumentDuplicateIcon,
+} from '@heroicons/react/24/outline';
+/* The Link component is similar to an anchor tag in that it
+ * allows you to link between pages in an app.
+ * However, Next.js automatically prefetches code for linked 
+ * routes in the background.
+ * This is what makes page transition so quick!
+ */
+import Link from 'next/link';
+/* usePathname() is a React hook that gets the user's current path
+ * from the URL. Using it means that we'll have to identify this
+ * component as a client component at the top of the file.
+ */
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
+
+// Map of links to display in the side navigation.
+// Depending on the size of the application, this would be stored in a database.
+const links = [
+  { name: 'Home', href: '/dashboard', icon: HomeIcon },
+  {
+    name: 'Invoices',
+    href: '/dashboard/invoices',
+    icon: DocumentDuplicateIcon,
+  },
+  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+];
+
+export default function NavLinks() {
+const pathname = usePathname();
+  return (
+    <>
+      {links.map((link) => {
+        const LinkIcon = link.icon;
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={clsx(
+							'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+							{
+								'bg-sky-100 text-blue-600': pathname === link.href,
+							},
+						)}
+          >
+            <LinkIcon className="w-6" />
+            <p className="hidden md:block">{link.name}</p>
+          </Link>
+        );
+      })}
+    </>
+  );
+}

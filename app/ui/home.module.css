@@ -1,0 +1,10 @@
+/* CSS modules create unit class names for each component.
+ * This reduces the risk of styling conflicts
+ */
+.shape { /* example of css module*/
+	height: 0;
+	width: 0;
+	border-bottom: 30px solid black;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+}
