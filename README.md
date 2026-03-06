@@ -12,7 +12,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 - [x] Chapter 4: Creating Layouts and Pages
 - [x] Chapter 5: Navigating Between Pages
 - [x] Chapter 6: Setting Up Your Database
-- [7] Chapter 7: Fetching Data
+- [x] Chapter 7: Fetching Data
 - [ ] Chapter 8: Static and Dynamic Rendering
 - [ ] Chapter 9: Streaming
 - [ ] Chapter 10: Adding Search and Pagination
