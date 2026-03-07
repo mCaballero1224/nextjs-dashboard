@@ -13,7 +13,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 - [x] Chapter 5: Navigating Between Pages
 - [x] Chapter 6: Setting Up Your Database
 - [x] Chapter 7: Fetching Data
-- [ ] Chapter 8: Static and Dynamic Rendering
+- [x] Chapter 8: Static and Dynamic Rendering
 - [ ] Chapter 9: Streaming
 - [ ] Chapter 10: Adding Search and Pagination
 - [ ] Chapter 11: Mutating Data
