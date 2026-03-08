@@ -15,7 +15,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 - [x] Chapter 7: Fetching Data
 - [x] Chapter 8: Static and Dynamic Rendering
 - [x] Chapter 9: Streaming
-- [ ] Chapter 10: Adding Search and Pagination
+- [x] Chapter 10: Adding Search and Pagination
 - [ ] Chapter 11: Mutating Data
 - [ ] Chapter 12: Handling Errors
 - [ ] Chapter 13: Improving Accessibility
