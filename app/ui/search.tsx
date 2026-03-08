@@ -8,7 +8,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 	const pathname = usePathname();
 	const { replace } = useRouter();
 
-	const handleSearch = (term) => {
+	const handleSearch = (term: string) => {
 		const params = new URLSearchParams(searchParams);
 		// reset page number to 1 on new search query
 		params.set('page', '1');
