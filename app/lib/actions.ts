@@ -15,7 +15,9 @@ const FormSchema = z.object({
 	date: z.string(),
 });
 
+// Validate values using Zod
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(formData: FormData) {
 	const { customerId, amount, status } = CreateInvoice.parse({
@@ -38,4 +40,33 @@ export async function createInvoice(formData: FormData) {
 	// Redirect user back to /dashboard/invoices page after
 	// invoice creation
 	redirect('/dashboard/invoices');
+}
+
+export async function updateInvoice(id: string, formData: FormData) {
+  // Extract values from FormData
+  const {customerId, amount, status } = UpdateInvoice.parse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
+
+  // Calculate the amoutn incents to prevent flaoting-point issues
+  const amountInCents = amount * 100;
+
+  // Pass values into SQL query
+  await sql`
+    UPDATE invoices
+    SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+    WHERE id = ${id}
+  `;
+  // Cache route segments and redirect back to invoices page
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+}
+
+export async function deleteInvoice(id: string) {
+  await sql`DELETE FROM invoices WHERE id = ${id}`;
+  // No need to redirect, revalidatePath will trigger
+  // a new server reqeust and re-render the table
+  revalidatePath('/dashboard/invoices');
 }
