@@ -26,8 +26,9 @@ export async function createInvoice(formData: FormData) {
 		status: formData.get('status'),
 	});
 	// Usually a good idea to store monetary values as cents to avoid 
-	// floating-point errors
-	const amountInCents = amount * 100;
+  // floating-point errors. Use Math.round to ensure amount is a 
+  // whole number
+	const amountInCents = Math.round(amount * 100);
 	const date = new Date().toISOString().split('T')[0];
 
 	await sql`
@@ -50,8 +51,8 @@ export async function updateInvoice(id: string, formData: FormData) {
     status: formData.get('status'),
   });
 
-  // Calculate the amoutn incents to prevent flaoting-point issues
-  const amountInCents = amount * 100;
+  // Calculate the amount incents to prevent flaoting-point issues
+	const amountInCents = Math.round(amount * 100);
 
   // Pass values into SQL query
   await sql`
