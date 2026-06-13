@@ -41,7 +41,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
         status: formData.get('status'),
     });
 
-    console.log(validatedFields);
     // if form validation fails, return errors early; continue otherwise
     if (!validatedFields.success) {
         return {
@@ -75,19 +74,32 @@ export async function createInvoice(prevState: State, formData: FormData) {
     redirect('/dashboard/invoices');
 }
 
-export async function updateInvoice(id: string, formData: FormData) {
+export async function updateInvoice(
+    id: string,
+    prevState: State,
+    formData: FormData
+) {
     // Extract values from FormData
-    const {customerId, amount, status } = UpdateInvoice.parse({
+    const validatedFields = UpdateInvoice.safeParse({
         customerId: formData.get('customerId'),
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
 
-    // Calculate the amount incents to prevent flaoting-point issues
+    // if form validation fails, return errors early; continue otherwise
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Invoice.',
+        };
+    }
+
+    // Prepare data for insertion into the database
+    const { customerId, amount, status } = validatedFields.data;
     const amountInCents = Math.round(amount * 100);
 
+    // Pass values into SQL query
     try {
-        // Pass values into SQL query
         await sql`
         UPDATE invoices
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
