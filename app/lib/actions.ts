@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -119,12 +121,30 @@ export async function updateInvoice(
 
 export async function deleteInvoice(id: string) {
     try {
-        await sql`DELETE FROM invoices WHERE id = ${id}`;
-    } catch (error) {
+        await sql`DELETE FROM invoices WHERE id = ${id}`; } catch (error) {
         console.error(error);
         throw new Error('Database Error. Failed to Delete Invoice.');
     }
     // No need to redirect, revalidatePath will trigger
     // a new server reqeust and re-render the table
     revalidatePath('/dashboard/invoices');
+}
+
+export async function authenticate(
+    prevState: string | undefined,
+    formData: FormData,
+) {
+    try {
+        await signIn('credentials', formData);
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignin':
+                    return 'Invalid credentials.';
+                default:
+                    return 'Something went wrong.';
+            }
+        }
+        throw error;
+    }
 }
